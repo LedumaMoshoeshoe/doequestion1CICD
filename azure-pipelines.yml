@@ -1,0 +1,65 @@
+name: doequestion1CICD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build
+      run: |
+        # Add commands to compile source code and generate artifacts
+        # For example, if using Node.js:
+        # npm install
+        # npm run build
+      # Display name for this step
+      displayName: 'Build'
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Test
+      run: |
+        # Add commands to run unit tests and code quality checks
+        # For example, if using Node.js:
+        # npm install
+        # npm test
+      displayName: 'Test'
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Deploy to Staging
+      run: |
+        # Add commands to deploy the application to a staging environment
+        # For example, if deploying to Azure:
+        # az login --service-principal -u ${{ secrets.AZURE_SP_APPID }} -p ${{ secrets.AZURE_SP_PASSWORD }} --tenant ${{ secrets.AZURE_TENANT_ID }}
+        # az webapp deployment source config --name <app-name> --resource-group <resource-group> --branch main --repo-url https://github.com/<username>/<repository>.git
+      displayName: 'Deploy to Staging'
+
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Notify on Failure
+      if: failure()
+      run: |
+        # Add commands to send notifications on build or deployment failure
+        # For example, if using Slack:
+        # curl -X POST -H 'Content-type: application/json' --data '{"text":"Build or deployment failed!"}' ${{ secrets.SLACK_WEBHOOK_URL }}
+      displayName: 'Notify on Failure'
